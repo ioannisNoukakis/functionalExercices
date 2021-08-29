@@ -1,5 +1,5 @@
 package me.ioannis.noukakis
-package chapter3.ex3_4
+package chapter3.ex3_5
 
 import scala.annotation.tailrec
 
@@ -64,7 +64,11 @@ object List { // `List` companion object. Contains functions for creating and wo
     case Cons(_, tail) => drop(tail, n - 1)
   }
 
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
+  @tailrec
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
+    case Cons(head, tail) if f(head) => dropWhile(tail, f)
+    case _ => l
+  }
 
   def init[A](l: List[A]): List[A] = ???
 
@@ -77,10 +81,7 @@ object List { // `List` companion object. Contains functions for creating and wo
 
 object Main {
   def main(args: Array[String]): Unit = {
-    println(List.drop(List("a", "b", "c", "d"), -1))
-    println(List.drop(List("a", "b", "c", "d"), 1))
-    println(List.drop(List("a", "b", "c", "d"), 2))
-    println(List.drop(List("a", "b", "c", "d"), 3))
-    println(List.drop(List("a", "b", "c", "d"), 100))
+    println(List.dropWhile(List("a", "b", "c", "d"), (a: String) => a != "c"))
+    println(List.dropWhile(List("a", "b", "c", "d"), (a: String) => a != "a"))
   }
 }
