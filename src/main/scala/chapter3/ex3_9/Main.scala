@@ -1,5 +1,5 @@
 package me.ioannis.noukakis
-package chapter3.ex3_6
+package chapter3.ex3_9
 
 import scala.annotation.tailrec
 
@@ -76,7 +76,7 @@ object List { // `List` companion object. Contains functions for creating and wo
     case Cons(head, tail) => Cons(head, init(tail))
   }
 
-  def length[A](l: List[A]): Int = ???
+  def length[A](l: List[A]): Int = foldRight(l, 0)((_, acc) => acc + 1)
 
   def foldLeft[A, B](l: List[A], z: B)(f: (B, A) => B): B = ???
 
@@ -85,6 +85,7 @@ object List { // `List` companion object. Contains functions for creating and wo
 
 object Main {
   def main(args: Array[String]): Unit = {
-    println(List.init(List("a", "b", "c", "d")))
+    println(List.length(List("a", "b", "c", "d")))
+    println(List.length(Nil))
   }
 }
